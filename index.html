@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Why I Love You, Ananya</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Great+Vibes&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --pink: #DB2777;
+      --pink-light: #F472B6;
+      --pink-pale: #FBCFE8;
+      --rose-bg: #FDF2F8;
+      --rose-deep: #831843;
+      --blush: #FCE7F3;
+      --white: #FFFFFF;
+      --font-script: 'Great Vibes', cursive;
+      --font-serif: 'Cormorant Infant', serif;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: var(--font-serif);
+      background: var(--rose-bg);
+      color: var(--rose-deep);
+    }
+
+    /* ─── Slide Container ─── */
+    .slides {
+      height: 100vh;
+      width: 100vw;
+      position: relative;
+    }
+
+    .slide {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      z-index: 1;
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 2;
+    }
+
+    /* ─── Progress Bar ─── */
+    .progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--pink), var(--pink-light));
+      z-index: 200;
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+
+    /* ─── Nav Dots ─── */
+    .dots {
+      position: fixed;
+      right: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      border: 2px solid var(--pink);
+      background: transparent;
+      cursor: pointer;
+      padding: 0;
+      transition: all 0.3s ease;
+    }
+
+    .dot.active {
+      background: var(--pink);
+      transform: scale(1.4);
+      box-shadow: 0 0 10px rgba(219,39,119,0.4);
+    }
+
+    .dot:hover {
+      background: var(--pink-light);
+    }
+
+    /* ─── Sticker (decorative SVG element) ─── */
+    .sticker {
+      position: absolute;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.18;
+    }
+
+    .sticker svg {
+      width: 100%;
+      height: 100%;
+      fill: var(--pink-light);
+    }
+
+    /* Sticker color variants */
+    .sticker.chocolate svg { fill: #7B5B3A; }
+    .sticker.chocolate { opacity: 0.3; }
+    .sticker.candy-orange svg { fill: #E8750A; }
+    .sticker.candy-orange { opacity: 0.32; }
+    .sticker.candy-yellow svg { fill: #E0A800; }
+    .sticker.candy-yellow { opacity: 0.3; }
+    .sticker.candy-brown svg { fill: #8B4513; }
+    .sticker.candy-brown { opacity: 0.28; }
+    .sticker.rose-red svg { fill: #D6336C; }
+    .sticker.rose-red { opacity: 0.22; }
+    .sticker.lotus svg { fill: #E88DB6; }
+    .sticker.lotus { opacity: 0.25; }
+
+    /* ─── Cute image stickers ─── */
+    .sticker-img {
+      position: absolute;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.55;
+    }
+
+    .sticker-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* Sticker animations */
+    .sticker.float {
+      animation: sFloat 6s ease-in-out infinite;
+    }
+
+    .sticker.pulse {
+      animation: sPulse 3s ease-in-out infinite;
+    }
+
+    .sticker.wobble {
+      animation: sWobble 5s ease-in-out infinite;
+    }
+
+    .sticker.spin {
+      animation: sSpin 12s linear infinite;
+    }
+
+    .sticker.bob {
+      animation: sBob 4s ease-in-out infinite;
+    }
+
+    @keyframes sFloat {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(5deg); }
+    }
+
+    @keyframes sPulse {
+      0%, 100% { transform: scale(1); opacity: 0.18; }
+      50% { transform: scale(1.15); opacity: 0.28; }
+    }
+
+    @keyframes sWobble {
+      0%, 100% { transform: rotate(-5deg); }
+      50% { transform: rotate(5deg); }
+    }
+
+    @keyframes sSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes sBob {
+      0%, 100% { transform: translateY(0) translateX(0); }
+      25% { transform: translateY(-10px) translateX(5px); }
+      75% { transform: translateY(5px) translateX(-5px); }
+    }
+
+    /* ─── Slide Content Animation ─── */
+    .slide-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 700px;
+      opacity: 0;
+      transform: scale(0.92);
+      filter: blur(6px);
+      transition: opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  filter 1.2s ease;
+    }
+
+    .slide.visible .slide-content {
+      opacity: 1;
+      transform: scale(1);
+      filter: blur(0px);
+    }
+
+    /* ─── Sticker entrance ─── */
+    .slide .sticker,
+    .slide .sticker-img {
+      transition: opacity 1.5s ease 0.3s, transform 1.5s ease 0.3s;
+    }
+
+    .slide:not(.visible) .sticker,
+    .slide:not(.visible) .sticker-img {
+      opacity: 0 !important;
+    }
+
+    /* ─── Background Number ─── */
+    .bg-num {
+      position: absolute;
+      font-family: var(--font-script);
+      font-size: clamp(6rem, 18vw, 14rem);
+      color: var(--pink-pale);
+      opacity: 0;
+      z-index: 0;
+      line-height: 1;
+      transition: opacity 1.4s ease 0.2s;
+      user-select: none;
+    }
+
+    .slide.visible .bg-num {
+      opacity: 0.35;
+    }
+
+    /* ─── Reason heart entrance ─── */
+    .reason-heart {
+      transition: opacity 0.8s ease 0.4s, transform 0.8s cubic-bezier(0.34,1.56,0.64,1) 0.4s;
+    }
+
+    .slide:not(.visible) .reason-heart {
+      opacity: 0;
+      transform: scale(0.3);
+    }
+
+    /* ─── Text elements stagger ─── */
+    .slide .label {
+      transition: opacity 0.9s ease 0.5s;
+    }
+    .slide .heading-script,
+    .slide .heading-big {
+      transition: opacity 1s ease 0.6s;
+    }
+    .slide .divider {
+      transition: opacity 0.8s ease 0.75s, transform 0.8s ease 0.75s;
+    }
+    .slide:not(.visible) .divider {
+      transform: scaleX(0);
+    }
+    .slide .body-text {
+      transition: opacity 1s ease 0.85s;
+    }
+    .slide .sub-text,
+    .slide-9 .label {
+      transition: opacity 1s ease 0.95s;
+    }
+
+    .slide:not(.visible) .label,
+    .slide:not(.visible) .heading-script,
+    .slide:not(.visible) .heading-big,
+    .slide:not(.visible) .body-text,
+    .slide:not(.visible) .sub-text {
+      opacity: 0;
+    }
+
+    /* ─── Slide Backgrounds ─── */
+    .slide-1 { background: linear-gradient(135deg, #FDF2F8, #FCE7F3 50%, #FDF2F8); }
+    .slide-2 { background: linear-gradient(160deg, #FFF 0%, #FDF2F8 100%); }
+    .slide-3 { background: linear-gradient(160deg, #FDF2F8 0%, #FFF 100%); }
+    .slide-4 { background: linear-gradient(160deg, #FFF 0%, #FCE7F3 100%); }
+    .slide-5 { background: linear-gradient(160deg, #FCE7F3 0%, #FFF 100%); }
+    .slide-6 { background: linear-gradient(160deg, #FFF 0%, #FDF2F8 100%); }
+    .slide-7 { background: linear-gradient(160deg, #FDF2F8 0%, #FFF 100%); }
+    .slide-8 { background: linear-gradient(160deg, #FFF 0%, #FCE7F3 100%); }
+    .slide-9 { background: linear-gradient(135deg, #831843, #DB2777 50%, #F472B6); }
+
+    /* ─── Typography ─── */
+    .heading-script {
+      font-family: var(--font-script);
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      color: var(--pink);
+      line-height: 1.3;
+      margin-bottom: 1rem;
+    }
+
+    .heading-big {
+      font-family: var(--font-script);
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      color: var(--pink);
+      line-height: 1.2;
+    }
+
+    .label {
+      font-family: var(--font-serif);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--pink-light);
+      margin-bottom: 1.2rem;
+    }
+
+    .body-text {
+      font-family: var(--font-serif);
+      font-size: clamp(1.1rem, 2vw, 1.35rem);
+      font-weight: 400;
+      line-height: 1.85;
+      color: var(--rose-deep);
+      opacity: 0.85;
+    }
+
+    .divider {
+      width: 50px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--pink-light), transparent);
+      margin: 1.5rem auto;
+    }
+
+    .sub-text {
+      font-family: var(--font-serif);
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--rose-deep);
+      opacity: 0.6;
+      margin-top: 0.8rem;
+    }
+
+    /* Title slide heart icon row */
+    .heart-row {
+      display: flex;
+      gap: 0.6rem;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .heart-row svg {
+      width: 28px; height: 28px;
+      fill: var(--pink-light);
+      animation: sPulse 2.5s ease-in-out infinite;
+    }
+
+    .heart-row svg:nth-child(2) { animation-delay: 0.3s; fill: var(--pink); }
+    .heart-row svg:nth-child(3) { animation-delay: 0.6s; }
+
+    .heart-row {
+      transition: opacity 0.8s ease 0.3s, transform 0.8s cubic-bezier(0.34,1.56,0.64,1) 0.3s;
+    }
+    .slide:not(.visible) .heart-row {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+
+    /* Reason heart icon */
+    .reason-heart {
+      margin-bottom: 1rem;
+    }
+
+    .reason-heart svg {
+      width: 36px; height: 36px;
+      fill: var(--pink);
+      opacity: 0.5;
+    }
+
+    /* Scroll hint */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      font-family: var(--font-serif);
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--pink-light);
+      text-align: center;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    .scroll-arrow {
+      display: block;
+      margin: 0.5rem auto 0;
+      width: 18px; height: 18px;
+      border-right: 2px solid var(--pink-light);
+      border-bottom: 2px solid var(--pink-light);
+      transform: rotate(45deg);
+      animation: arrowBounce 2s ease-in-out infinite;
+    }
+
+    @keyframes arrowBounce {
+      0%, 100% { transform: rotate(45deg) translateY(0); }
+      50% { transform: rotate(45deg) translateY(5px); }
+    }
+
+    /* ─── Final Slide (dark) ─── */
+    .slide-9 .heading-big { color: #FFF; }
+    .slide-9 .body-text { color: rgba(255,255,255,0.85); }
+    .slide-9 .divider { background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent); }
+    .slide-9 .label { color: rgba(255,255,255,0.5); margin-top: 2rem; }
+    .slide-9 .sticker svg { fill: rgba(255,255,255,0.25); }
+    .slide-9 .sticker { opacity: 0.3; }
+    .slide-9 .sticker.chocolate svg { fill: #C4956A; }
+    .slide-9 .sticker.chocolate { opacity: 0.4; }
+    .slide-9 .sticker.candy-orange svg { fill: #FFB347; }
+    .slide-9 .sticker.candy-orange { opacity: 0.4; }
+    .slide-9 .sticker.candy-yellow svg { fill: #FFE066; }
+    .slide-9 .sticker.candy-yellow { opacity: 0.35; }
+    .slide-9 .sticker.rose-red svg { fill: #F9A8C9; }
+    .slide-9 .sticker.rose-red { opacity: 0.35; }
+    .slide-9 .sticker.lotus svg { fill: #F9A8C9; }
+    .slide-9 .sticker.lotus { opacity: 0.35; }
+    .slide-9 .sticker-img { opacity: 0.7; }
+
+    /* ─── Photo ─── */
+    .photo {
+      width: clamp(130px, 22vw, 200px);
+      height: clamp(200px, 36vw, 320px);
+      border-radius: 1rem;
+      object-fit: cover;
+      object-position: center top;
+      border: 4px solid var(--pink-pale);
+      box-shadow: 0 8px 30px rgba(219,39,119,0.15);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.8s ease 0.3s, transform 0.8s cubic-bezier(0.34,1.56,0.64,1) 0.3s;
+    }
+
+    .slide.visible .photo {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Title slide photo — larger */
+    .photo-hero {
+      width: clamp(150px, 26vw, 240px);
+      height: clamp(220px, 40vw, 360px);
+      margin-bottom: 2rem;
+    }
+
+    /* Finale photo — white border */
+    .slide-9 .photo {
+      border-color: rgba(255,255,255,0.5);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 768px) {
+      .dots { right: 0.8rem; gap: 0.6rem; }
+      .dot { width: 8px; height: 8px; }
+      .slide { padding: 1.5rem; }
+      .sticker { opacity: 0.12; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .sticker { animation: none !important; }
+      .scroll-arrow { animation: none; }
+      .heart-row svg { animation: none; }
+      .slide-content { transition-duration: 0.01s; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<nav class="dots" id="dots"></nav>
+
+<div class="slides" id="slides">
+
+  <!-- ═══ SLIDE 1: Title ═══ -->
+  <section class="slide slide-1 active visible">
+    <!-- Stickers -->
+    <div class="sticker float" style="top:10%;left:8%;width:50px;height:50px">
+      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </div>
+    <div class="sticker pulse" style="top:15%;right:12%;width:35px;height:35px">
+      <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>
+    </div>
+    <div class="sticker wobble" style="bottom:18%;left:12%;width:40px;height:40px">
+      <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>
+    </div>
+    <div class="sticker bob" style="bottom:22%;right:10%;width:45px;height:45px">
+      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </div>
+    <div class="sticker spin" style="top:35%;left:5%;width:25px;height:25px;opacity:0.1">
+      <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>
+    </div>
+    <div class="sticker float" style="top:40%;right:6%;width:30px;height:30px;animation-delay:-3s">
+      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </div>
+
+    <div class="sticker-img bob" style="bottom:10%;left:6%;width:80px">
+      <img src="stickers/image4.jpg" alt="" />
+    </div>
+    <div class="sticker-img float" style="top:22%;right:4%;width:70px;animation-delay:-2s">
+      <img src="stickers/image2.jpg" alt="" />
+    </div>
+    <!-- Lotus -->
+    <div class="sticker lotus float" style="bottom:32%;left:4%;width:40px;height:40px;animation-delay:-4s">
+      <svg viewBox="0 0 24 24"><path d="M12 2c-2 5-5 8-5 12 0 2.5 2.2 4.5 5 4.5s5-2 5-4.5c0-4-3-7-5-12z"/><path d="M4.5 9C3.5 11 3 13 3 14.5 3 17.5 5 20 8 20c.8 0 1.5-.2 2.2-.5C7 18 5.5 15.5 5.5 12.5c0-1.2-.3-2.3-1-3.5z"/><path d="M19.5 9c-.7 1.2-1 2.3-1 3.5 0 3-1.5 5.5-4.7 7 .7.3 1.4.5 2.2.5 3 0 5-2.5 5-5.5 0-1.5-.5-3.5-1.5-5.5z"/></svg>
+    </div>
+    <!-- Hershey Kiss -->
+    <div class="sticker chocolate bob" style="top:30%;right:3%;width:28px;height:28px;animation-delay:-1s">
+      <svg viewBox="0 0 24 24"><path d="M12 5C9 10 6 14 6 17c0 2.8 2.7 5 6 5s6-2.2 6-5c0-3-3-7-6-12z"/><path d="M10.5 1.5c-.3-.4-.8 0-.5.5L12 5l2-3c.3-.5-.2-.9-.5-.5l-1.5 1.2-1.5-1.2z"/></svg>
+    </div>
+    <!-- Reese's -->
+    <div class="sticker candy-orange pulse" style="top:50%;left:3%;width:22px;height:22px;animation-delay:-3s">
+      <svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="6"/></svg>
+    </div>
+
+    <div class="slide-content">
+      <div class="heart-row">
+        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+      </div>
+      <img class="photo photo-hero" src="../pics/1.jpg" alt="Ananya" style="object-position:center center" />
+      <h1 class="heading-big">Why I Love You, Ananya</h1>
+      <div class="divider"></div>
+      <p class="sub-text">Happy National Girlfriend Day</p>
+    </div>
+    <div class="scroll-hint" id="scrollHint">
+      Scroll down
+      <span class="scroll-arrow"></span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 2: Reason 1 ═══ -->
+  <section class="slide slide-2">
+    <span class="bg-num">01</span>
+    <!-- Stickers: house + hearts -->
+    <div class="sticker float" style="top:12%;left:10%;width:40px;height:40px">
+      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </div>
+    <div class="sticker bob" style="top:18%;right:8%;width:35px;height:35px">
+      <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    </div>
+    <div class="sticker pulse" style="bottom:15%;left:8%;width:30px;height:30px">
+      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </div>
+    <div class="sticker wobble" style="bottom:20%;right:12%;width:25px;height:25px">
+      <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>
+    </div>
+    <div class="sticker-img float" style="bottom:12%;right:6%;width:75px;animation-delay:-1s">
+      <img src="stickers/image.jpg" alt="" />
+    </div>
+    <!-- Rose -->
+    <div class="sticker rose-red wobble" style="top:8%;left:18%;width:32px;height:32px;animation-delay:-2s">
+      <svg viewBox="0 0 24 24"><path d="M12 4C8 4 5 7 5 11c0 4 3 6.5 7 7.5 4-1 7-3.5 7-7.5 0-4-3-7-7-7zm0 3.5c1.9 0 3.5 1.6 3.5 3.5s-1.6 3.5-3.5 3.5-3.5-1.6-3.5-3.5 1.6-3.5 3.5-3.5z"/><rect x="11" y="17" width="2" height="5" rx="1"/></svg>
+    </div>
+    <!-- Hershey Kiss -->
+    <div class="sticker chocolate float" style="bottom:8%;left:15%;width:26px;height:26px;animation-delay:-5s">
+      <svg viewBox="0 0 24 24"><path d="M12 5C9 10 6 14 6 17c0 2.8 2.7 5 6 5s6-2.2 6-5c0-3-3-7-6-12z"/><path d="M10.5 1.5c-.3-.4-.8 0-.5.5L12 5l2-3c.3-.5-.2-.9-.5-.5l-1.5 1.2-1.5-1.2z"/></svg>
+    </div>
+    <!-- Reese's -->
+    <div class="sticker candy-yellow bob" style="top:42%;right:4%;width:20px;height:20px;animation-delay:-3s">
+      <svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="6"/></svg>
+    </div>
+    <!-- Lotus -->
+    <div class="sticker lotus pulse" style="bottom:25%;right:15%;width:35px;height:35px;animation-delay:-4s">
+      <svg viewBox="0 0 24 24"><path d="M12 2c-2 5-5 8-5 12 0 2.5 2.2 4.5 5 4.5s5-2 5-4.5c0-4-3-7-5-12z"/><path d="M4.5 9C3.5 11 3 13 3 14.5 3 17.5 5 20 8 20c.8 0 1.5-.2 2.2-.5C7 18 5.5 15.5 5.5 12.5c0-1.2-.3-2.3-1-3.5z"/><path d="M19.5 9c-.7 1.2-1 2.3-1 3.5 0 3-1.5 5.5-4.7 7 .7.3 1.4.5 2.2.5 3 0 5-2.5 5-5.5 0-1.5-.5-3.5-1.5-5.5z"/></svg>
+    </div>
+
+    <div class="slide-content">
+      <img class="photo" src="../pics/9.jpg" alt="Ananya" style="object-position:center center" />
+      <p class="label">Reason One</p>
+      <h2 class="heading-script">You Make Me Feel Less Alone</h2>
+      <div class="divider"></div>
+      <p class="body-text">You never let me feel alone, not even for a second. No matter what I'm going through, you're always right there making sure I'm okay. I don't know how you do it but you just make everything feel better.</p>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 3: Reason 2 ═══ -->
+  <section class="slide slide-3">
+    <span class="bg-num">02</span>
+    <!-- Stickers: moon + stars -->
+    <div class="sticker float" style="top:10%;right:10%;width:50px;height:50px">
+      <svg viewBox="0 0 24 24"><path d="M12.3 2a9.7 9.7 0 0 0-8.6 14.1A9.9 9.9 0 0 0 12.3 22a9.7 9.7 0 0 0 7.4-3.4 7.5 7.5 0 0 1-7.4-16.6z"/></svg>
+    </div>
+    <div class="sticker pulse" style="top:8%;right:25%;width:20px;height:20px">
+      <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>
+    </div>
+    <div class="sticker spin" style="top:20%;left:8%;width:22px;height:22px;opacity:0.12">
+      <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>
+    </div>
+    <div class="sticker bob" style="bottom:15%;left:10%;width:35px;height:35px;animation-delay:-2s">
+      <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>
+    </div>
+    <div class="sticker wobble" style="bottom:12%;right:8%;width:40px;height:40px">
+      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </div>
+    <div class="sticker-img bob" style="bottom:10%;left:5%;width:70px;animation-delay:-3s">
+      <img src="stickers/image1.jpg" alt="" />
+    </div>
+    <!-- Hershey Kiss -->
+    <div class="sticker chocolate wobble" style="top:35%;right:5%;width:24px;height:24px;animation-delay:-1s">
+      <svg viewBox="0 0 24 24"><path d="M12 5C9 10 6 14 6 17c0 2.8 2.7 5 6 5s6-2.2 6-5c0-3-3-7-6-12z"/><path d="M10.5 1.5c-.3-.4-.8 0-.5.5L12 5l2-3c.3-.5-.2-.9-.5-.5l-1.5 1.2-1.5-1.2z"/></svg>
+    </div>
+    <!-- Reese's -->
+    <div class="sticker candy-orange bob" style="bottom:25%;right:10%;width:18px;height:18px;animation-delay:-4s">
+      <svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="6"/></svg>
+    </div>
+    <!-- Rose -->
+    <div class="sticker rose-red float" style="top:45%;left:4%;width:30px;height:30px;animation-delay:-2s">
+      <svg viewBox="0 0 24 24"><path d="M12 4C8 4 5 7 5 11c0 4 3 6.5 7 7.5 4-1 7-3.5 7-7.5 0-4-3-7-7-7zm0 3.5c1.9 0 3.5 1.6 3.5 3.5s-1.6 3.5-3.5 3.5-3.5-1.6-3.5-3.5 1.6-3.5 3.5-3.5z"/><rect x="11" y="17" width="2" height="5" rx="1"/></svg>
+    </div>
+
+    <div class="slide-content">
+      <img class="photo" src="../pics/3-2.jpg" alt="Ananya" />
+      <p class="label">Reason Two</p>
+      <h2 class="heading-script">Those Late Night Calls</h2>
+      <div class="divider"></div>
+      <p class="body-text">You always wanna talk and call me all night and honestly I love it so much. Hearing your voice before I fall asleep is my favorite thing ever. I could listen to you talk forever and not get tired of it.</p>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 4: Reason 3 ═══ -->
+  <section class="slide slide-4">
+    <span class="bg-num">03</span>
+    <!-- Stickers: smiley + hearts -->
+    <div class="sticker bob" style="top:12%;left:8%;width:45px;height:45px">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5" style="stroke:var(--pink-light)"/><path d="M8 14s1.5 2 4 2 4-2 4-2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="stroke:var(--pink-light)"/><circle cx="9" cy="9.5" r="1.2"/><circle cx="15" cy="9.5" r="1.2"/></svg>
+    </div>
+    <div class="sticker pulse" style="top:15%;right:10%;width:35px;height:35px">
+      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </div>
+    <div class="sticker float" style="bottom:18%;right:12%;width:30px;height:30px;animation-delay:-4s">
+      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </div>
+    <div class="sticker wobble" style="bottom:14%;left:10%;width:28px;height:28px">
+      <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>
+    </div>
+    <div class="sticker-img float" style="top:8%;right:5%;width:75px;animation-delay:-4s">
+      <img src="stickers/image2.jpg" alt="" />
+    </div>
+    <!-- Lotus -->
+    <div class="sticker lotus bob" style="top:38%;left:3%;width:36px;height:36px;animation-delay:-2s">
+      <svg viewBox="0 0 24 24"><path d="M12 2c-2 5-5 8-5 12 0 2.5 2.2 4.5 5 4.5s5-2 5-4.5c0-4-3-7-5-12z"/><path d="M4.5 9C3.5 11 3 13 3 14.5 3 17.5 5 20 8 20c.8 0 1.5-.2 2.2-.5C7 18 5.5 15.5 5.5 12.5c0-1.2-.3-2.3-1-3.5z"/><path d="M19.5 9c-.7 1.2-1 2.3-1 3.5 0 3-1.5 5.5-4.7 7 .7.3 1.4.5 2.2.5 3 0 5-2.5 5-5.5 0-1.5-.5-3.5-1.5-5.5z"/></svg>
+    </div>
+    <!-- Hershey Kiss -->
+    <div class="sticker chocolate pulse" style="bottom:10%;right:15%;width:25px;height:25px;animation-delay:-5s">
+      <svg viewBox="0 0 24 24"><path d="M12 5C9 10 6 14 6 17c0 2.8 2.7 5 6 5s6-2.2 6-5c0-3-3-7-6-12z"/><path d="M10.5 1.5c-.3-.4-.8 0-.5.5L12 5l2-3c.3-.5-.2-.9-.5-.5l-1.5 1.2-1.5-1.2z"/></svg>
+    </div>
+    <!-- Reese's -->
+    <div class="sticker candy-brown float" style="top:12%;left:20%;width:18px;height:18px;animation-delay:-3s">
+      <svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="6"/></svg>
+    </div>
+    <div class="sticker candy-yellow wobble" style="bottom:28%;left:8%;width:16px;height:16px;animation-delay:-1s">
+      <svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="6"/></svg>
+    </div>
+
+    <div class="slide-content">
+      <img class="photo" src="../pics/image2.jpg" alt="Ananya" />
+      <p class="label">Reason Three</p>
+      <h2 class="heading-script">Those Cute Faces You Make</h2>
+      <div class="divider"></div>
+      <p class="body-text">You have no idea how much you make me cheese. Every little face you make, every silly expression, I literally can't stop smiling. Like my cheeks actually hurt. You're the only person who does that to me.</p>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 5: Reason 4 ═══ -->
+  <section class="slide slide-5">
+    <span class="bg-num">04</span>
+    <!-- Stickers: sparkles -->
+    <div class="sticker pulse" style="top:10%;left:12%;width:30px;height:30px">
+      <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>
+    </div>
+    <div class="sticker spin" style="top:18%;right:8%;width:25px;height:25px;opacity:0.12">
+      <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>
+    </div>
+    <div class="sticker float" style="bottom:20%;left:6%;width:35px;height:35px;animation-delay:-1s">
+      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </div>
+    <div class="sticker bob" style="bottom:15%;right:10%;width:30px;height:30px">
+      <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>
+    </div>
+    <div class="sticker pulse" style="top:45%;right:5%;width:20px;height:20px;animation-delay:-2s">
+      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </div>
+    <div class="sticker-img bob" style="bottom:8%;right:5%;width:80px;animation-delay:-1s">
+      <img src="stickers/image4.jpg" alt="" />
+    </div>
+    <div class="sticker-img float" style="top:10%;left:5%;width:65px;animation-delay:-5s">
+      <img src="stickers/image.jpg" alt="" />
+    </div>
+    <!-- Rose -->
+    <div class="sticker rose-red float" style="bottom:30%;left:5%;width:30px;height:30px;animation-delay:-3s">
+      <svg viewBox="0 0 24 24"><path d="M12 4C8 4 5 7 5 11c0 4 3 6.5 7 7.5 4-1 7-3.5 7-7.5 0-4-3-7-7-7zm0 3.5c1.9 0 3.5 1.6 3.5 3.5s-1.6 3.5-3.5 3.5-3.5-1.6-3.5-3.5 1.6-3.5 3.5-3.5z"/><rect x="11" y="17" width="2" height="5" rx="1"/></svg>
+    </div>
+    <!-- Hershey Kiss -->
+    <div class="sticker chocolate bob" style="top:25%;right:4%;width:26px;height:26px;animation-delay:-2s">
+      <svg viewBox="0 0 24 24"><path d="M12 5C9 10 6 14 6 17c0 2.8 2.7 5 6 5s6-2.2 6-5c0-3-3-7-6-12z"/><path d="M10.5 1.5c-.3-.4-.8 0-.5.5L12 5l2-3c.3-.5-.2-.9-.5-.5l-1.5 1.2-1.5-1.2z"/></svg>
+    </div>
+    <div class="sticker chocolate wobble" style="bottom:18%;left:18%;width:22px;height:22px;animation-delay:-4s">
+      <svg viewBox="0 0 24 24"><path d="M12 5C9 10 6 14 6 17c0 2.8 2.7 5 6 5s6-2.2 6-5c0-3-3-7-6-12z"/><path d="M10.5 1.5c-.3-.4-.8 0-.5.5L12 5l2-3c.3-.5-.2-.9-.5-.5l-1.5 1.2-1.5-1.2z"/></svg>
+    </div>
+    <!-- Reese's -->
+    <div class="sticker candy-orange pulse" style="top:50%;right:3%;width:18px;height:18px;animation-delay:-6s">
+      <svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="6"/></svg>
+    </div>
+
+    <div class="slide-content">
+      <img class="photo" src="../pics/image1.jpg" alt="Ananya" />
+      <p class="label">Reason Four</p>
+      <h2 class="heading-script">You Are So Gorgeous</h2>
+      <div class="divider"></div>
+      <p class="body-text">Ananya you are genuinely the most beautiful girl I have ever seen. Like you're an actual model and it shows. But it's not just how you look, it's how you carry yourself too. You're so stunning and I still can't believe you're mine.</p>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 6: Reason 5 ═══ -->
+  <section class="slide slide-6">
+    <span class="bg-num">05</span>
+    <!-- Stickers: film + hearts -->
+    <div class="sticker bob" style="top:10%;left:8%;width:40px;height:40px">
+      <svg viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg>
+    </div>
+    <div class="sticker float" style="top:15%;right:10%;width:35px;height:35px;animation-delay:-2s">
+      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </div>
+    <div class="sticker pulse" style="bottom:18%;left:12%;width:28px;height:28px">
+      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </div>
+    <div class="sticker wobble" style="bottom:12%;right:8%;width:25px;height:25px">
+      <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>
+    </div>
+    <div class="sticker-img float" style="bottom:12%;left:6%;width:75px;animation-delay:-2s">
+      <img src="stickers/image1.jpg" alt="" />
+    </div>
+    <!-- Lotus -->
+    <div class="sticker lotus float" style="top:35%;right:4%;width:38px;height:38px;animation-delay:-3s">
+      <svg viewBox="0 0 24 24"><path d="M12 2c-2 5-5 8-5 12 0 2.5 2.2 4.5 5 4.5s5-2 5-4.5c0-4-3-7-5-12z"/><path d="M4.5 9C3.5 11 3 13 3 14.5 3 17.5 5 20 8 20c.8 0 1.5-.2 2.2-.5C7 18 5.5 15.5 5.5 12.5c0-1.2-.3-2.3-1-3.5z"/><path d="M19.5 9c-.7 1.2-1 2.3-1 3.5 0 3-1.5 5.5-4.7 7 .7.3 1.4.5 2.2.5 3 0 5-2.5 5-5.5 0-1.5-.5-3.5-1.5-5.5z"/></svg>
+    </div>
+    <!-- Hershey Kiss -->
+    <div class="sticker chocolate bob" style="top:10%;left:20%;width:24px;height:24px;animation-delay:-5s">
+      <svg viewBox="0 0 24 24"><path d="M12 5C9 10 6 14 6 17c0 2.8 2.7 5 6 5s6-2.2 6-5c0-3-3-7-6-12z"/><path d="M10.5 1.5c-.3-.4-.8 0-.5.5L12 5l2-3c.3-.5-.2-.9-.5-.5l-1.5 1.2-1.5-1.2z"/></svg>
+    </div>
+    <!-- Reese's -->
+    <div class="sticker candy-brown pulse" style="bottom:8%;right:18%;width:20px;height:20px;animation-delay:-1s">
+      <svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="6"/></svg>
+    </div>
+    <div class="sticker candy-orange wobble" style="top:48%;left:3%;width:16px;height:16px;animation-delay:-4s">
+      <svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="6"/></svg>
+    </div>
+
+    <div class="slide-content">
+      <img class="photo" src="../pics/2.jpg" alt="Ananya" style="object-position:center 30%" />
+      <p class="label">Reason Five</p>
+      <h2 class="heading-script">Our Date Nights</h2>
+      <div class="divider"></div>
+      <p class="body-text">You always make time for our date nights and it means so much to me. Whether we're watching something together or just talking for hours, those moments with you are honestly my favorite part of any week.</p>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 7: Reason 6 ═══ -->
+  <section class="slide slide-7">
+    <span class="bg-num">06</span>
+    <!-- Stickers: envelope + flowers -->
+    <div class="sticker float" style="top:12%;right:10%;width:40px;height:40px">
+      <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+    </div>
+    <div class="sticker bob" style="top:10%;left:10%;width:35px;height:35px">
+      <svg viewBox="0 0 24 24"><path d="M12 22c4.97 0 9-4.03 9-9-4.97 0-9 4.03-9 9zM5.6 10.25c0 1.38 1.12 2.5 2.5 2.5.53 0 1.01-.16 1.42-.44l-.02.19c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5l-.02-.19c.4.28.89.44 1.42.44 1.38 0 2.5-1.12 2.5-2.5 0-1-.59-1.85-1.43-2.25.84-.4 1.43-1.25 1.43-2.25 0-1.38-1.12-2.5-2.5-2.5-.53 0-1.01.16-1.42.44l.02-.19C14.5 2.12 13.38 1 12 1S9.5 2.12 9.5 3.5l.02.19c-.4-.28-.89-.44-1.42-.44-1.38 0-2.5 1.12-2.5 2.5 0 1 .59 1.85 1.43 2.25-.84.4-1.43 1.25-1.43 2.25zM12 5.5c1.38 0 2.5 1.12 2.5 2.5s-1.12 2.5-2.5 2.5S9.5 9.38 9.5 8s1.12-2.5 2.5-2.5zM3 13c0 4.97 4.03 9 9 9 0-4.97-4.03-9-9-9z"/></svg>
+    </div>
+    <div class="sticker pulse" style="bottom:15%;left:8%;width:30px;height:30px">
+      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </div>
+    <div class="sticker wobble" style="bottom:20%;right:10%;width:35px;height:35px">
+      <svg viewBox="0 0 24 24"><path d="M12 22c4.97 0 9-4.03 9-9-4.97 0-9 4.03-9 9zM5.6 10.25c0 1.38 1.12 2.5 2.5 2.5.53 0 1.01-.16 1.42-.44l-.02.19c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5l-.02-.19c.4.28.89.44 1.42.44 1.38 0 2.5-1.12 2.5-2.5 0-1-.59-1.85-1.43-2.25.84-.4 1.43-1.25 1.43-2.25 0-1.38-1.12-2.5-2.5-2.5-.53 0-1.01.16-1.42.44l.02-.19C14.5 2.12 13.38 1 12 1S9.5 2.12 9.5 3.5l.02.19c-.4-.28-.89-.44-1.42-.44-1.38 0-2.5 1.12-2.5 2.5 0 1 .59 1.85 1.43 2.25-.84.4-1.43 1.25-1.43 2.25zM12 5.5c1.38 0 2.5 1.12 2.5 2.5s-1.12 2.5-2.5 2.5S9.5 9.38 9.5 8s1.12-2.5 2.5-2.5zM3 13c0 4.97 4.03 9 9 9 0-4.97-4.03-9-9-9z"/></svg>
+    </div>
+    <div class="sticker-img bob" style="top:10%;right:6%;width:80px;animation-delay:-3s">
+      <img src="stickers/image2.jpg" alt="" />
+    </div>
+    <div class="sticker-img float" style="bottom:10%;left:5%;width:70px;animation-delay:-1s">
+      <img src="stickers/image.jpg" alt="" />
+    </div>
+    <!-- Rose -->
+    <div class="sticker rose-red bob" style="bottom:25%;right:8%;width:32px;height:32px;animation-delay:-5s">
+      <svg viewBox="0 0 24 24"><path d="M12 4C8 4 5 7 5 11c0 4 3 6.5 7 7.5 4-1 7-3.5 7-7.5 0-4-3-7-7-7zm0 3.5c1.9 0 3.5 1.6 3.5 3.5s-1.6 3.5-3.5 3.5-3.5-1.6-3.5-3.5 1.6-3.5 3.5-3.5z"/><rect x="11" y="17" width="2" height="5" rx="1"/></svg>
+    </div>
+    <!-- Hershey Kiss -->
+    <div class="sticker chocolate float" style="top:40%;left:4%;width:26px;height:26px;animation-delay:-2s">
+      <svg viewBox="0 0 24 24"><path d="M12 5C9 10 6 14 6 17c0 2.8 2.7 5 6 5s6-2.2 6-5c0-3-3-7-6-12z"/><path d="M10.5 1.5c-.3-.4-.8 0-.5.5L12 5l2-3c.3-.5-.2-.9-.5-.5l-1.5 1.2-1.5-1.2z"/></svg>
+    </div>
+    <!-- Reese's -->
+    <div class="sticker candy-yellow float" style="top:15%;left:18%;width:18px;height:18px;animation-delay:-4s">
+      <svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="6"/></svg>
+    </div>
+    <!-- Lotus -->
+    <div class="sticker lotus pulse" style="bottom:18%;left:15%;width:34px;height:34px;animation-delay:-6s">
+      <svg viewBox="0 0 24 24"><path d="M12 2c-2 5-5 8-5 12 0 2.5 2.2 4.5 5 4.5s5-2 5-4.5c0-4-3-7-5-12z"/><path d="M4.5 9C3.5 11 3 13 3 14.5 3 17.5 5 20 8 20c.8 0 1.5-.2 2.2-.5C7 18 5.5 15.5 5.5 12.5c0-1.2-.3-2.3-1-3.5z"/><path d="M19.5 9c-.7 1.2-1 2.3-1 3.5 0 3-1.5 5.5-4.7 7 .7.3 1.4.5 2.2.5 3 0 5-2.5 5-5.5 0-1.5-.5-3.5-1.5-5.5z"/></svg>
+    </div>
+
+    <div class="slide-content">
+      <img class="photo" src="../pics/image34.jpg" alt="Ananya" />
+      <p class="label">Reason Six</p>
+      <h2 class="heading-script">You Always Show Up for Me</h2>
+      <div class="divider"></div>
+      <p class="body-text">Having you there to talk to whenever I need it makes me feel so loved and cared for. You show up for me every single day and you always know exactly what to say. That means more to me than you'll ever know.</p>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 8: Reason 7 ═══ -->
+  <section class="slide slide-8">
+    <span class="bg-num">07</span>
+    <!-- Stickers: airplane + heart + globe -->
+    <div class="sticker float" style="top:10%;right:10%;width:40px;height:40px">
+      <svg viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+    </div>
+    <div class="sticker bob" style="top:15%;left:8%;width:35px;height:35px">
+      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </div>
+    <div class="sticker spin" style="bottom:18%;left:10%;width:40px;height:40px;opacity:0.12">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+    </div>
+    <div class="sticker pulse" style="bottom:12%;right:8%;width:30px;height:30px">
+      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </div>
+    <div class="sticker wobble" style="top:45%;left:4%;width:25px;height:25px">
+      <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>
+    </div>
+    <div class="sticker-img float" style="top:12%;left:5%;width:80px;animation-delay:-4s">
+      <img src="stickers/image4.jpg" alt="" />
+    </div>
+    <!-- Hershey Kiss -->
+    <div class="sticker chocolate bob" style="bottom:8%;right:12%;width:28px;height:28px;animation-delay:-1s">
+      <svg viewBox="0 0 24 24"><path d="M12 5C9 10 6 14 6 17c0 2.8 2.7 5 6 5s6-2.2 6-5c0-3-3-7-6-12z"/><path d="M10.5 1.5c-.3-.4-.8 0-.5.5L12 5l2-3c.3-.5-.2-.9-.5-.5l-1.5 1.2-1.5-1.2z"/></svg>
+    </div>
+    <div class="sticker chocolate pulse" style="top:8%;right:20%;width:22px;height:22px;animation-delay:-3s">
+      <svg viewBox="0 0 24 24"><path d="M12 5C9 10 6 14 6 17c0 2.8 2.7 5 6 5s6-2.2 6-5c0-3-3-7-6-12z"/><path d="M10.5 1.5c-.3-.4-.8 0-.5.5L12 5l2-3c.3-.5-.2-.9-.5-.5l-1.5 1.2-1.5-1.2z"/></svg>
+    </div>
+    <!-- Reese's -->
+    <div class="sticker candy-orange wobble" style="bottom:22%;left:8%;width:20px;height:20px;animation-delay:-5s">
+      <svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="6"/></svg>
+    </div>
+    <div class="sticker candy-yellow float" style="top:38%;right:3%;width:16px;height:16px;animation-delay:-2s">
+      <svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="6"/></svg>
+    </div>
+    <!-- Rose -->
+    <div class="sticker rose-red float" style="bottom:32%;right:5%;width:28px;height:28px;animation-delay:-6s">
+      <svg viewBox="0 0 24 24"><path d="M12 4C8 4 5 7 5 11c0 4 3 6.5 7 7.5 4-1 7-3.5 7-7.5 0-4-3-7-7-7zm0 3.5c1.9 0 3.5 1.6 3.5 3.5s-1.6 3.5-3.5 3.5-3.5-1.6-3.5-3.5 1.6-3.5 3.5-3.5z"/><rect x="11" y="17" width="2" height="5" rx="1"/></svg>
+    </div>
+
+    <div class="slide-content">
+      <img class="photo" src="../pics/8.jpg" alt="Ananya" style="object-position:center 60%" />
+      <p class="label">Reason Seven</p>
+      <h2 class="heading-script">You Love Me So Well</h2>
+      <div class="divider"></div>
+      <p class="body-text">The way you love me is so different from anything I've ever known. You love me so fully and so intentionally and it makes me feel like the luckiest guy ever. What we have is so real and I wouldn't trade it for anything.</p>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 9: Finale ═══ -->
+  <section class="slide slide-9">
+    <!-- Stickers: hearts + sparkles (white tinted) -->
+    <div class="sticker float" style="top:10%;left:8%;width:50px;height:50px">
+      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </div>
+    <div class="sticker pulse" style="top:8%;right:12%;width:30px;height:30px">
+      <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>
+    </div>
+    <div class="sticker bob" style="top:20%;right:6%;width:40px;height:40px;animation-delay:-3s">
+      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </div>
+    <div class="sticker wobble" style="bottom:18%;left:10%;width:45px;height:45px">
+      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </div>
+    <div class="sticker spin" style="bottom:15%;right:10%;width:25px;height:25px">
+      <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>
+    </div>
+    <div class="sticker float" style="top:45%;left:5%;width:30px;height:30px;animation-delay:-5s">
+      <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>
+    </div>
+    <div class="sticker pulse" style="bottom:30%;right:5%;width:35px;height:35px;animation-delay:-1s">
+      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </div>
+    <div class="sticker-img bob" style="bottom:8%;left:6%;width:90px;animation-delay:-2s">
+      <img src="stickers/IMG_0327.gif" alt="" />
+    </div>
+    <div class="sticker-img float" style="top:12%;right:5%;width:75px;animation-delay:-3s">
+      <img src="stickers/image4.jpg" alt="" />
+    </div>
+    <div class="sticker-img float" style="bottom:15%;right:6%;width:65px;animation-delay:-5s">
+      <img src="stickers/image2.jpg" alt="" />
+    </div>
+    <!-- Lotus -->
+    <div class="sticker lotus float" style="top:30%;left:4%;width:40px;height:40px;animation-delay:-1s">
+      <svg viewBox="0 0 24 24"><path d="M12 2c-2 5-5 8-5 12 0 2.5 2.2 4.5 5 4.5s5-2 5-4.5c0-4-3-7-5-12z"/><path d="M4.5 9C3.5 11 3 13 3 14.5 3 17.5 5 20 8 20c.8 0 1.5-.2 2.2-.5C7 18 5.5 15.5 5.5 12.5c0-1.2-.3-2.3-1-3.5z"/><path d="M19.5 9c-.7 1.2-1 2.3-1 3.5 0 3-1.5 5.5-4.7 7 .7.3 1.4.5 2.2.5 3 0 5-2.5 5-5.5 0-1.5-.5-3.5-1.5-5.5z"/></svg>
+    </div>
+    <!-- Rose -->
+    <div class="sticker rose-red bob" style="top:18%;left:15%;width:30px;height:30px;animation-delay:-4s">
+      <svg viewBox="0 0 24 24"><path d="M12 4C8 4 5 7 5 11c0 4 3 6.5 7 7.5 4-1 7-3.5 7-7.5 0-4-3-7-7-7zm0 3.5c1.9 0 3.5 1.6 3.5 3.5s-1.6 3.5-3.5 3.5-3.5-1.6-3.5-3.5 1.6-3.5 3.5-3.5z"/><rect x="11" y="17" width="2" height="5" rx="1"/></svg>
+    </div>
+    <!-- Hershey Kiss -->
+    <div class="sticker chocolate wobble" style="bottom:28%;right:4%;width:26px;height:26px;animation-delay:-6s">
+      <svg viewBox="0 0 24 24"><path d="M12 5C9 10 6 14 6 17c0 2.8 2.7 5 6 5s6-2.2 6-5c0-3-3-7-6-12z"/><path d="M10.5 1.5c-.3-.4-.8 0-.5.5L12 5l2-3c.3-.5-.2-.9-.5-.5l-1.5 1.2-1.5-1.2z"/></svg>
+    </div>
+    <div class="sticker chocolate float" style="top:42%;right:8%;width:22px;height:22px;animation-delay:-2s">
+      <svg viewBox="0 0 24 24"><path d="M12 5C9 10 6 14 6 17c0 2.8 2.7 5 6 5s6-2.2 6-5c0-3-3-7-6-12z"/><path d="M10.5 1.5c-.3-.4-.8 0-.5.5L12 5l2-3c.3-.5-.2-.9-.5-.5l-1.5 1.2-1.5-1.2z"/></svg>
+    </div>
+    <!-- Reese's -->
+    <div class="sticker candy-orange bob" style="bottom:35%;left:10%;width:18px;height:18px;animation-delay:-3s">
+      <svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="6"/></svg>
+    </div>
+    <div class="sticker candy-yellow pulse" style="top:55%;left:6%;width:16px;height:16px;animation-delay:-5s">
+      <svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="6"/></svg>
+    </div>
+
+    <div class="slide-content">
+      <img class="photo photo-hero" src="../pics/image.jpg" alt="Ananya" />
+      <h2 class="heading-big">I Love You, Ananya</h2>
+      <div class="divider"></div>
+      <p class="body-text">You are my favorite person in the whole entire world.<br>Today, tomorrow, and always.</p>
+      <p class="label">August 1, 2026 &middot; National Girlfriend Day</p>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function() {
+  var slides = document.querySelectorAll('.slide');
+  var total = slides.length;
+  var current = 0;
+  var lastNav = 0;
+  var touchY = 0;
+  var dotsEl = document.getElementById('dots');
+  var bar = document.getElementById('progress');
+
+  // Build dots
+  for (var i = 0; i < total; i++) {
+    var d = document.createElement('button');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('data-i', String(i));
+    dotsEl.appendChild(d);
+  }
+
+  dotsEl.addEventListener('click', function(e) {
+    var idx = e.target.getAttribute('data-i');
+    if (idx !== null) go(parseInt(idx));
+  });
+
+  // Scroll hint
+  var hint = document.getElementById('scrollHint');
+  if (hint) hint.onclick = function() { go(1); };
+
+  function go(n) {
+    if (n === current || n < 0 || n >= total) return;
+    // 1.2s cooldown to match the slow transition
+    if (Date.now() - lastNav < 1200) return;
+    lastNav = Date.now();
+
+    // Remove visible first so content animations reset
+    slides[current].classList.remove('visible');
+    slides[current].classList.remove('active');
+
+    current = n;
+    slides[current].classList.add('active');
+
+    // Small delay before adding visible so the content animations
+    // play after the slide fade-in starts
+    setTimeout(function() {
+      slides[current].classList.add('visible');
+    }, 150);
+
+    // Update dots
+    var allDots = dotsEl.querySelectorAll('.dot');
+    for (var i = 0; i < allDots.length; i++) {
+      allDots[i].className = 'dot' + (i === current ? ' active' : '');
+    }
+
+    // Update progress
+    bar.style.width = (current / (total - 1) * 100) + '%';
+  }
+
+  // Wheel
+  window.addEventListener('wheel', function(e) {
+    e.preventDefault();
+    go(current + (e.deltaY > 0 ? 1 : -1));
+  }, { passive: false });
+
+  // Keyboard
+  window.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault(); go(current + 1);
+    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+      e.preventDefault(); go(current - 1);
+    }
+  });
+
+  // Touch
+  window.addEventListener('touchstart', function(e) { touchY = e.touches[0].clientY; }, { passive: true });
+  window.addEventListener('touchend', function(e) {
+    var d = touchY - e.changedTouches[0].clientY;
+    if (Math.abs(d) > 50) go(current + (d > 0 ? 1 : -1));
+  }, { passive: true });
+
+  bar.style.width = '0%';
+})();
+</script>
+</body>
+</html>
